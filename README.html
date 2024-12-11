@@ -1,151 +1,215 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
+
+
   <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Instalación Amazon Linux 2023 en VirtualBox</title>
 
+
+
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet">
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-ini.min.js"></script>
 
+
+
     <style>
+
       body {
+
         font-family: 'Roboto', serif;
+
       }
+
+
 
       :not(pre)>code {
+
         font-size: 14px;
+
         background-color: #e5e5e5;
+
         padding: 1px 4px;
+
         border-radius: 4px;
+
         line-height: 1.5;
+
         vertical-align: top;
+
       }
+
+
 
       pre[class*="language-"] {
-        padding: 2em 1em 1em 1em;
+
+        padding: 1.5em 1em 1em 1em;
+
         border-radius: 4px;
+
         overflow: auto;
+
         max-width: fit-content;
+
       }
+
+
 
       table {
+
         width: auto;
+
         border-collapse: separate;
+
         border-spacing: 2px 0;
+
       }
+
+
 
       th {
+
         display: none;
+
       }
+
+
 
       tr>td:first-child:has(strong),
+
       tr>td:first-child:not(empty)+td:empty {
+
         background-color: rgb(80, 217, 249);
+
         border-spacing: 0;
+
       }
+
+
 
       tr>td:first-child:empty,
+
       tr>td:first-child:empty+td:empty {
+
         display: none;
+
       }
+
+
 
       td {
+
         background-color: rgb(213, 247, 247);
+
         text-align: left;
+
       }
+
+
 
       .code-container {
+
         position: relative;
+
         margin-bottom: 1em;
+
       }
 
-      .copy-button {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 5px;
-        border-radius: 4px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+
+      .code-toolbar {
+
+        max-width: fit-content;
+
       }
 
-      .copy-button img {
-        width: 16px;
-        height: 16px;
+
+
+      .copy-to-clipboard-button {
+
+        vertical-align: top;
+
       }
+
     </style>
 
+
+
     <script>
+
+      /* Format page */
+
       function formatPage() {
+
         extendCells();
-        addCopyButtons();
+
       }
+
+
+
+      /* Extend cells of header table row */
 
       function extendCells() {
+
         document.querySelectorAll('tr').forEach(row => {
+
           const cells = row.querySelectorAll('td');
 
+
+
           if (
+
             (cells.length === 2) &&
+
             (cells[0].innerHTML.trim() !== '') &&
+
             (cells[1].innerHTML.trim() === '<!-- -->')
+
           ) {
+
             cells[0].setAttribute('colspan', '2');
+
             cells[1].style.display = 'none';
+
           }
+
         });
+
       }
 
-      function addCopyButtons() {
-        var codeBlocks = document.querySelectorAll('pre code[class]');
-        codeBlocks.forEach(function (codeBlock) {
-          var container = codeBlock.parentElement;
-          container.classList.add('code-container');
-
-          var button = document.createElement('button');
-          button.className = 'copy-button';
-          button.innerHTML = '<img src="https://img.icons8.com/ios-glyphs/30/ffffff/copy.png" alt="Copiar">';
-          button.title = "Copiar código";
-
-          button.onclick = function () {
-            copyToClipboard(codeBlock, button);
-          };
-
-          container.appendChild(button);
-        });
-      }
-
-      function copyToClipboard(codeBlock, button) {
-        var code = codeBlock.innerText;
-
-        navigator.clipboard.writeText(code).then(
-          function () {
-            var originalText = button.innerHTML;
-
-            button.innerHTML = '¡Copiado!';
-            setTimeout(function () {
-              button.innerHTML = originalText;
-            }, 2000);
-          }, function (err) {
-            console.error("Error al copiar el código: ", err);
-          });
-      }
     </script>
+
   </head>
 
-  <body onload="formatPage()">
+
+
+  <body data-prismjs-copy="Copiar" data-prismjs-copy-success="¡ Copiado !" data-prismjs-copy-timeout="2000"
+
+    onload="formatPage()">
+
     <h1 id="instalacion-amazon-linux-2023-en-virtualbox">INSTALACIÓN AMAZON LINUX 2023 EN VIRTUALBOX</h1>
 <h2 id="prerrequisitos">Prerrequisitos</h2>
 <ul>
@@ -390,9 +454,16 @@ runcmd:
 <h4 id="me-gustaria-iniciar-la-maquina-virtual-sin-la-consola-para-acceso-exclusivo-a-traves-de-ssh.es-posible">Me gustaría iniciar la máquina virtual sin la consola, para acceso exclusivo a través de SSH. ¿Es posible?</h4>
 <p>Sí, para iniciar la máquina virtual sin modo consola, en <strong>VirtualBox</strong> pulsar en el desplegable a la derecha del botón <strong>Iniciar</strong> y seleccionar <strong>Inicio sin pantalla</strong>.</p>
 
+
     <hr>
-    <p>Generado el: 2024-12-08 13:37:52</p>
+
+    <p>Generado el: 2024-12-11 11:57:48</p>
+
   </body>
 
+
+
 </html>
+
+
 
